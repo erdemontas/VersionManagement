@@ -36,7 +36,7 @@ namespace VersionManagement
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<VersionDatabaseModel>(item => item.UseSqlServer(Configuration.GetConnectionString("myconn")));
+             services.AddDbContext<VersionDatabaseModel>(options =>options.UseSqlServer(Configuration.GetConnectionString("myconn")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
