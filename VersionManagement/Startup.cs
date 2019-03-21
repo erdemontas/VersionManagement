@@ -36,9 +36,7 @@ namespace VersionManagement
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=VersionManagementDB;Trusted_Connection=True;ConnectRetryCount=0";
-            services.AddDbContext<VersionDatabaseModel>
-                (options => options.UseSqlServer(connection));
+            services.AddDbContext<VersionDatabaseModel>(item => item.UseSqlServer(Configuration.GetConnectionString("myconn")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
