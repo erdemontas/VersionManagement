@@ -10,7 +10,7 @@ using VersionManagement.Models;
 namespace VersionManagement.Migrations
 {
     [DbContext(typeof(VersionDatabaseModel))]
-    [Migration("20190321075914_InitialCreate")]
+    [Migration("20190321120525_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,6 +26,8 @@ namespace VersionManagement.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("ChangeLogTypeId");
 
                     b.Property<string>("CreatedBy");
 
@@ -47,7 +49,13 @@ namespace VersionManagement.Migrations
 
                     b.Property<int>("VersionId");
 
+                    b.Property<long?>("VersionId1");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ChangeLogTypeId");
+
+                    b.HasIndex("VersionId1");
 
                     b.ToTable("ChangeLog");
                 });
@@ -101,9 +109,13 @@ namespace VersionManagement.Migrations
 
                     b.Property<int>("ProductId");
 
+                    b.Property<long?>("ProductId1");
+
                     b.Property<string>("Type");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("Component");
                 });
@@ -118,6 +130,8 @@ namespace VersionManagement.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
+                    b.Property<string>("Description");
+
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
@@ -125,6 +139,8 @@ namespace VersionManagement.Migrations
                     b.Property<string>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -168,6 +184,8 @@ namespace VersionManagement.Migrations
 
                     b.Property<int>("CustomerId");
 
+                    b.Property<long?>("CustomerId1");
+
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
@@ -180,7 +198,13 @@ namespace VersionManagement.Migrations
 
                     b.Property<int>("ProductId");
 
+                    b.Property<long?>("ProductId1");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId1");
+
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("CustomerProduct");
                 });
@@ -222,6 +246,8 @@ namespace VersionManagement.Migrations
 
                     b.Property<int>("CustomerProductId");
 
+                    b.Property<long?>("CustomerProductId1");
+
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
@@ -232,7 +258,13 @@ namespace VersionManagement.Migrations
 
                     b.Property<int>("VersionId");
 
+                    b.Property<long?>("VersionId1");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerProductId1");
+
+                    b.HasIndex("VersionId1");
 
                     b.ToTable("PublishActivity");
                 });
@@ -246,6 +278,8 @@ namespace VersionManagement.Migrations
                     b.Property<string>("Comment");
 
                     b.Property<int>("ComponentId");
+
+                    b.Property<long?>("ComponentId1");
 
                     b.Property<string>("CreatedBy");
 
@@ -263,7 +297,56 @@ namespace VersionManagement.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ComponentId1");
+
                     b.ToTable("Version");
+                });
+
+            modelBuilder.Entity("VersionManagement.Models.ChangeLog", b =>
+                {
+                    b.HasOne("VersionManagement.Models.ChangeLogType", "ChangeLogType")
+                        .WithMany()
+                        .HasForeignKey("ChangeLogTypeId");
+
+                    b.HasOne("VersionManagement.Models.Version", "Version")
+                        .WithMany()
+                        .HasForeignKey("VersionId1");
+                });
+
+            modelBuilder.Entity("VersionManagement.Models.Component", b =>
+                {
+                    b.HasOne("VersionManagement.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId1");
+                });
+
+            modelBuilder.Entity("VersionManagement.Models.CustomerProduct", b =>
+                {
+                    b.HasOne("VersionManagement.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId1");
+
+                    b.HasOne("VersionManagement.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId1");
+                });
+
+            modelBuilder.Entity("VersionManagement.Models.PublishActivity", b =>
+                {
+                    b.HasOne("VersionManagement.Models.CustomerProduct", "CustomerProduct")
+                        .WithMany()
+                        .HasForeignKey("CustomerProductId1");
+
+                    b.HasOne("VersionManagement.Models.Version", "Version")
+                        .WithMany()
+                        .HasForeignKey("VersionId1");
+                });
+
+            modelBuilder.Entity("VersionManagement.Models.Version", b =>
+                {
+                    b.HasOne("VersionManagement.Models.Component", "Component")
+                        .WithMany()
+                        .HasForeignKey("ComponentId1");
                 });
 #pragma warning restore 612, 618
         }
