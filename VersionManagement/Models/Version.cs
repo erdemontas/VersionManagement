@@ -8,6 +8,7 @@ namespace VersionManagement.Models
     public class Version:SharedEntities
     {
         public int ComponentId { get; set; }
+        public Component Component { get; set; }
         public string Comment { get; set; }
         public string ReleaseNumber { get; set; }
     }

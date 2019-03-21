@@ -8,6 +8,8 @@ namespace VersionManagement.Models
     public class PublishActivity : SharedEntities
     {
         public int CustomerProductId { get; set; }
+        public CustomerProduct CustomerProduct { get; set; }
         public int VersionId { get; set; }
+        public Version Version { get; set; }
     }
 }
