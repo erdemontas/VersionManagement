@@ -7,13 +7,10 @@ namespace VersionManagement.Models
 {
     public class ChangeLog : SharedEntities
     {
-        public int VersionId { get; set; }
-        public Version Version { get; set; }
-
         public string Title { get; set; }
+        public Version Version { get; set; }      //Foreign Key   
         public string Description { get; set; }
-
-        public int TypeId { get; set; }
-        public ChangeLogType ChangeLogType { get; set; }
+        public Guid TypeId { get; set; }
+        public ChangeLogType ChangeLogType { get; set; }    //Foreign Key
     }
 }

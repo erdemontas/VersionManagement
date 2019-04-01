@@ -8,10 +8,7 @@ namespace VersionManagement.Models
     public class Component : SharedEntities
     {
         public string Name { get; set; }
-
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-
+        public Product Product { get; set; }    //Foreign Key
         public string Type { get; set; }
 
 

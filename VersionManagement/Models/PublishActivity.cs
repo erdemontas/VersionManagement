@@ -7,9 +7,8 @@ namespace VersionManagement.Models
 {
     public class PublishActivity : SharedEntities
     {
-        public int CustomerProductId { get; set; }
-        public CustomerProduct CustomerProduct { get; set; }
-        public int VersionId { get; set; }
-        public Version Version { get; set; }
+        
+        public CustomerProduct CustomerProduct { get; set; }    //Foreign Key
+        public Version Version { get; set; }    //Foreign Key
     }
 }

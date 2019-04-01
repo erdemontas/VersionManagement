@@ -7,7 +7,7 @@ namespace VersionManagement.Models
 {
     public class Product:SharedEntities
     {
-        public string Name { get; set; }
+        public string Name { get; set; }    
         
     }
 }

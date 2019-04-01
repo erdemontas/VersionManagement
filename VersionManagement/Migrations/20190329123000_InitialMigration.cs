@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VersionManagement.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -99,51 +99,15 @@ namespace VersionManagement.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    ProductId = table.Column<int>(nullable: false),
-                    ProductId1 = table.Column<long>(nullable: true),
+                    ProductId = table.Column<long>(nullable: true),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Component", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Component_Product_ProductId1",
-                        column: x => x.ProductId1,
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CustomerProduct",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    ModifiedBy = table.Column<string>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    CustomerId = table.Column<int>(nullable: false),
-                    CustomerId1 = table.Column<long>(nullable: true),
-                    ProductId = table.Column<int>(nullable: false),
-                    ProductId1 = table.Column<long>(nullable: true),
-                    LastVersionId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CustomerProduct", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CustomerProduct_Customer_CustomerId1",
-                        column: x => x.CustomerId1,
-                        principalTable: "Customer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CustomerProduct_Product_ProductId1",
-                        column: x => x.ProductId1,
+                        name: "FK_Component_Product_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -161,8 +125,7 @@ namespace VersionManagement.Migrations
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    ComponentId = table.Column<int>(nullable: false),
-                    ComponentId1 = table.Column<long>(nullable: true),
+                    ComponentId = table.Column<long>(nullable: true),
                     Comment = table.Column<string>(nullable: true),
                     ReleaseNumber = table.Column<string>(nullable: true)
                 },
@@ -170,8 +133,8 @@ namespace VersionManagement.Migrations
                 {
                     table.PrimaryKey("PK_Version", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Version_Component_ComponentId1",
-                        column: x => x.ComponentId1,
+                        name: "FK_Version_Component_ComponentId",
+                        column: x => x.ComponentId,
                         principalTable: "Component",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -189,11 +152,10 @@ namespace VersionManagement.Migrations
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    VersionId = table.Column<int>(nullable: false),
-                    VersionId1 = table.Column<long>(nullable: true),
                     Title = table.Column<string>(nullable: true),
+                    VersionId = table.Column<long>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    TypeId = table.Column<int>(nullable: false),
+                    TypeId = table.Column<Guid>(nullable: false),
                     ChangeLogTypeId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
@@ -206,9 +168,48 @@ namespace VersionManagement.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ChangeLog_Version_VersionId1",
-                        column: x => x.VersionId1,
+                        name: "FK_ChangeLog_Version_VersionId",
+                        column: x => x.VersionId,
                         principalTable: "Version",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerProduct",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
+                    ModifiedBy = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    CustomerId = table.Column<long>(nullable: true),
+                    ProductId = table.Column<long>(nullable: true),
+                    LastVersionId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomerProduct_Customer_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CustomerProduct_Version_LastVersionId",
+                        column: x => x.LastVersionId,
+                        principalTable: "Version",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CustomerProduct_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -225,23 +226,21 @@ namespace VersionManagement.Migrations
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    CustomerProductId = table.Column<int>(nullable: false),
-                    CustomerProductId1 = table.Column<long>(nullable: true),
-                    VersionId = table.Column<int>(nullable: false),
-                    VersionId1 = table.Column<long>(nullable: true)
+                    CustomerProductId = table.Column<long>(nullable: true),
+                    VersionId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PublishActivity", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PublishActivity_CustomerProduct_CustomerProductId1",
-                        column: x => x.CustomerProductId1,
+                        name: "FK_PublishActivity_CustomerProduct_CustomerProductId",
+                        column: x => x.CustomerProductId,
                         principalTable: "CustomerProduct",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PublishActivity_Version_VersionId1",
-                        column: x => x.VersionId1,
+                        name: "FK_PublishActivity_Version_VersionId",
+                        column: x => x.VersionId,
                         principalTable: "Version",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -253,39 +252,44 @@ namespace VersionManagement.Migrations
                 column: "ChangeLogTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChangeLog_VersionId1",
+                name: "IX_ChangeLog_VersionId",
                 table: "ChangeLog",
-                column: "VersionId1");
+                column: "VersionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Component_ProductId1",
+                name: "IX_Component_ProductId",
                 table: "Component",
-                column: "ProductId1");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerProduct_CustomerId1",
+                name: "IX_CustomerProduct_CustomerId",
                 table: "CustomerProduct",
-                column: "CustomerId1");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerProduct_ProductId1",
+                name: "IX_CustomerProduct_LastVersionId",
                 table: "CustomerProduct",
-                column: "ProductId1");
+                column: "LastVersionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PublishActivity_CustomerProductId1",
+                name: "IX_CustomerProduct_ProductId",
+                table: "CustomerProduct",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PublishActivity_CustomerProductId",
                 table: "PublishActivity",
-                column: "CustomerProductId1");
+                column: "CustomerProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PublishActivity_VersionId1",
+                name: "IX_PublishActivity_VersionId",
                 table: "PublishActivity",
-                column: "VersionId1");
+                column: "VersionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Version_ComponentId1",
+                name: "IX_Version_ComponentId",
                 table: "Version",
-                column: "ComponentId1");
+                column: "ComponentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -306,10 +310,10 @@ namespace VersionManagement.Migrations
                 name: "CustomerProduct");
 
             migrationBuilder.DropTable(
-                name: "Version");
+                name: "Customer");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Version");
 
             migrationBuilder.DropTable(
                 name: "Component");

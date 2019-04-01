@@ -10,14 +10,14 @@ using VersionManagement.Models;
 namespace VersionManagement.Migrations
 {
     [DbContext(typeof(VersionDatabaseModel))]
-    [Migration("20190321120525_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190329123000_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -45,17 +45,15 @@ namespace VersionManagement.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("TypeId");
+                    b.Property<Guid>("TypeId");
 
-                    b.Property<int>("VersionId");
-
-                    b.Property<long?>("VersionId1");
+                    b.Property<long?>("VersionId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChangeLogTypeId");
 
-                    b.HasIndex("VersionId1");
+                    b.HasIndex("VersionId");
 
                     b.ToTable("ChangeLog");
                 });
@@ -107,15 +105,13 @@ namespace VersionManagement.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("ProductId");
-
-                    b.Property<long?>("ProductId1");
+                    b.Property<long?>("ProductId");
 
                     b.Property<string>("Type");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Component");
                 });
@@ -182,29 +178,27 @@ namespace VersionManagement.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("CustomerId");
-
-                    b.Property<long?>("CustomerId1");
+                    b.Property<long?>("CustomerId");
 
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int>("LastVersionId");
+                    b.Property<long?>("LastVersionId");
 
                     b.Property<string>("ModifiedBy");
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<int>("ProductId");
-
-                    b.Property<long?>("ProductId1");
+                    b.Property<long?>("ProductId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("ProductId1");
+                    b.HasIndex("LastVersionId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CustomerProduct");
                 });
@@ -244,9 +238,7 @@ namespace VersionManagement.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int>("CustomerProductId");
-
-                    b.Property<long?>("CustomerProductId1");
+                    b.Property<long?>("CustomerProductId");
 
                     b.Property<bool>("IsActive");
 
@@ -256,15 +248,13 @@ namespace VersionManagement.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<int>("VersionId");
-
-                    b.Property<long?>("VersionId1");
+                    b.Property<long?>("VersionId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerProductId1");
+                    b.HasIndex("CustomerProductId");
 
-                    b.HasIndex("VersionId1");
+                    b.HasIndex("VersionId");
 
                     b.ToTable("PublishActivity");
                 });
@@ -277,9 +267,7 @@ namespace VersionManagement.Migrations
 
                     b.Property<string>("Comment");
 
-                    b.Property<int>("ComponentId");
-
-                    b.Property<long?>("ComponentId1");
+                    b.Property<long?>("ComponentId");
 
                     b.Property<string>("CreatedBy");
 
@@ -297,7 +285,7 @@ namespace VersionManagement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComponentId1");
+                    b.HasIndex("ComponentId");
 
                     b.ToTable("Version");
                 });
@@ -310,43 +298,47 @@ namespace VersionManagement.Migrations
 
                     b.HasOne("VersionManagement.Models.Version", "Version")
                         .WithMany()
-                        .HasForeignKey("VersionId1");
+                        .HasForeignKey("VersionId");
                 });
 
             modelBuilder.Entity("VersionManagement.Models.Component", b =>
                 {
                     b.HasOne("VersionManagement.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId1");
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("VersionManagement.Models.CustomerProduct", b =>
                 {
                     b.HasOne("VersionManagement.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("VersionManagement.Models.Version", "LastVersion")
+                        .WithMany()
+                        .HasForeignKey("LastVersionId");
 
                     b.HasOne("VersionManagement.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId1");
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("VersionManagement.Models.PublishActivity", b =>
                 {
                     b.HasOne("VersionManagement.Models.CustomerProduct", "CustomerProduct")
                         .WithMany()
-                        .HasForeignKey("CustomerProductId1");
+                        .HasForeignKey("CustomerProductId");
 
                     b.HasOne("VersionManagement.Models.Version", "Version")
                         .WithMany()
-                        .HasForeignKey("VersionId1");
+                        .HasForeignKey("VersionId");
                 });
 
             modelBuilder.Entity("VersionManagement.Models.Version", b =>
                 {
                     b.HasOne("VersionManagement.Models.Component", "Component")
                         .WithMany()
-                        .HasForeignKey("ComponentId1");
+                        .HasForeignKey("ComponentId");
                 });
 #pragma warning restore 612, 618
         }

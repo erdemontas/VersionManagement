@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 namespace VersionManagement.Models
 {
     public class Version:SharedEntities
-    {
-        public int ComponentId { get; set; }
-        public Component Component { get; set; }
+    {     
+        public Component Component { get; set; }    //Foreign Key
         public string Comment { get; set; }
         public string ReleaseNumber { get; set; }
     }

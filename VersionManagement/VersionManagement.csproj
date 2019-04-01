@@ -5,13 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190321073502_InitialCreate.cs" />
-    <Compile Remove="Migrations\20190321073502_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190329113701_InitialDatabase.cs" />
+    <Compile Remove="Migrations\20190329113701_InitialDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20190329113958_InitialDatabase.cs" />
+    <Compile Remove="Migrations\20190329113958_InitialDatabase.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
   </ItemGroup>
 
 </Project>
