@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace VersionManagement.Models
+namespace VersionManagement.DTOs
 {
-    public class SharedEntities
+    public class SharedEntitiesDTO
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public DateTimeOffset CreatedDate { get; set; } = DateTimeOffset.Now;

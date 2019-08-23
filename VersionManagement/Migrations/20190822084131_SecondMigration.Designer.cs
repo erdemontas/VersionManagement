@@ -3,49 +3,55 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VersionManagement.Models;
 
 namespace VersionManagement.Migrations
 {
-    [DbContext(typeof(VersionDatabaseModel))]
-    partial class VersionDatabaseModelModelSnapshot : ModelSnapshot
+    [DbContext(typeof(VManagementContext))]
+    [Migration("20190822084131_SecondMigration")]
+    partial class SecondMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("VersionManagement.Models.ChangeLog", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("newid()");
 
-                    b.Property<long?>("ChangeLogTypeId");
+                    b.Property<Guid?>("ChangeLogTypeId");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Description");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
                     b.Property<string>("Title");
 
-                    b.Property<Guid>("TypeId");
-
-                    b.Property<long?>("VersionId");
+                    b.Property<Guid?>("VersionId");
 
                     b.HasKey("Id");
 
@@ -58,23 +64,29 @@ namespace VersionManagement.Migrations
 
             modelBuilder.Entity("VersionManagement.Models.ChangeLogType", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<string>("Description");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
                     b.Property<string>("Name");
 
@@ -85,25 +97,31 @@ namespace VersionManagement.Migrations
 
             modelBuilder.Entity("VersionManagement.Models.Component", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
                     b.Property<string>("Name");
 
-                    b.Property<long?>("ProductId");
+                    b.Property<Guid?>("ProductId");
 
                     b.Property<string>("Type");
 
@@ -116,13 +134,12 @@ namespace VersionManagement.Migrations
 
             modelBuilder.Entity("VersionManagement.Models.ComponentType", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate");
 
                     b.Property<string>("Description");
 
@@ -132,7 +149,7 @@ namespace VersionManagement.Migrations
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
                     b.Property<string>("Name");
 
@@ -143,21 +160,27 @@ namespace VersionManagement.Migrations
 
             modelBuilder.Entity("VersionManagement.Models.Customer", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
                     b.Property<string>("Name");
 
@@ -168,27 +191,33 @@ namespace VersionManagement.Migrations
 
             modelBuilder.Entity("VersionManagement.Models.CustomerProduct", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<long?>("CustomerId");
+                    b.Property<Guid?>("CustomerId");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
-                    b.Property<long?>("LastVersionId");
+                    b.Property<Guid?>("LastVersionId");
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
-                    b.Property<long?>("ProductId");
+                    b.Property<Guid?>("ProductId");
 
                     b.HasKey("Id");
 
@@ -203,21 +232,27 @@ namespace VersionManagement.Migrations
 
             modelBuilder.Entity("VersionManagement.Models.Product", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
                     b.Property<string>("Name");
 
@@ -228,25 +263,31 @@ namespace VersionManagement.Migrations
 
             modelBuilder.Entity("VersionManagement.Models.PublishActivity", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<long?>("CustomerProductId");
+                    b.Property<Guid?>("CustomerProductId");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
-                    b.Property<long?>("VersionId");
+                    b.Property<Guid?>("VersionId");
 
                     b.HasKey("Id");
 
@@ -259,25 +300,31 @@ namespace VersionManagement.Migrations
 
             modelBuilder.Entity("VersionManagement.Models.Version", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("newid()");
 
                     b.Property<string>("Comment");
 
-                    b.Property<long?>("ComponentId");
+                    b.Property<Guid?>("ComponentId");
 
                     b.Property<string>("CreatedBy");
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
-                    b.Property<bool>("IsDeleted");
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("ModifiedBy");
 
-                    b.Property<DateTime>("ModifiedDate");
+                    b.Property<DateTimeOffset?>("ModifiedDate");
 
                     b.Property<string>("ReleaseNumber");
 
@@ -335,7 +382,7 @@ namespace VersionManagement.Migrations
             modelBuilder.Entity("VersionManagement.Models.Version", b =>
                 {
                     b.HasOne("VersionManagement.Models.Component", "Component")
-                        .WithMany()
+                        .WithMany("Versions")
                         .HasForeignKey("ComponentId");
                 });
 #pragma warning restore 612, 618

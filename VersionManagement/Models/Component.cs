@@ -9,9 +9,8 @@ namespace VersionManagement.Models
     {
         public string Name { get; set; }
         public Product Product { get; set; }    //Foreign Key
+        public Guid? ProductId { get; set; }
         public string Type { get; set; }
-
-
-
+        public List<Version> Versions { get; set; }
     }
 }

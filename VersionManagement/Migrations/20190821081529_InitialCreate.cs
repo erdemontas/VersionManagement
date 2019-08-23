@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VersionManagement.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,10 +11,9 @@ namespace VersionManagement.Migrations
                 name: "ChangeLogType",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
@@ -32,10 +30,9 @@ namespace VersionManagement.Migrations
                 name: "ComponentType",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
@@ -52,10 +49,9 @@ namespace VersionManagement.Migrations
                 name: "Customer",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
@@ -71,10 +67,9 @@ namespace VersionManagement.Migrations
                 name: "Product",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
@@ -90,16 +85,15 @@ namespace VersionManagement.Migrations
                 name: "Component",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    ProductId = table.Column<long>(nullable: true),
+                    ProductId = table.Column<Guid>(nullable: true),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -117,15 +111,14 @@ namespace VersionManagement.Migrations
                 name: "Version",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    ComponentId = table.Column<long>(nullable: true),
+                    ComponentId = table.Column<Guid>(nullable: true),
                     Comment = table.Column<string>(nullable: true),
                     ReleaseNumber = table.Column<string>(nullable: true)
                 },
@@ -144,19 +137,17 @@ namespace VersionManagement.Migrations
                 name: "ChangeLog",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "newid()"),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "getdate()"),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
-                    IsActive = table.Column<bool>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false, defaultValue: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     Title = table.Column<string>(nullable: true),
-                    VersionId = table.Column<long>(nullable: true),
+                    VersionId = table.Column<Guid>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    TypeId = table.Column<Guid>(nullable: false),
-                    ChangeLogTypeId = table.Column<long>(nullable: true)
+                    ChangeLogTypeId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -179,17 +170,16 @@ namespace VersionManagement.Migrations
                 name: "CustomerProduct",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    CustomerId = table.Column<long>(nullable: true),
-                    ProductId = table.Column<long>(nullable: true),
-                    LastVersionId = table.Column<long>(nullable: true)
+                    CustomerId = table.Column<Guid>(nullable: true),
+                    ProductId = table.Column<Guid>(nullable: true),
+                    LastVersionId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -218,16 +208,15 @@ namespace VersionManagement.Migrations
                 name: "PublishActivity",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(nullable: false),
+                    ModifiedDate = table.Column<DateTimeOffset>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    CustomerProductId = table.Column<long>(nullable: true),
-                    VersionId = table.Column<long>(nullable: true)
+                    CustomerProductId = table.Column<Guid>(nullable: true),
+                    VersionId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {

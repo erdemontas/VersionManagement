@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VersionManagement.Models;
+using VersionManagement.Repositories;
 
 namespace VersionManagement.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IMapper _mapper;
+        public HomeController(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
         public IActionResult Index()
         {
             return View();

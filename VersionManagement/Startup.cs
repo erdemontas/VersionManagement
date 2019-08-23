@@ -11,9 +11,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using VersionManagement.Models;
-
+using AutoMapper;
+using VersionManagement.Profiles;
+using VersionManagement.Interfaces;
+using VersionManagement.Wrappers;
+using FluentValidation.AspNetCore;
+using VersionManagement.Extensions;
 namespace VersionManagement
 {
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -26,22 +32,25 @@ namespace VersionManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
+            var config = new AutoMapper.MapperConfiguration(cfg =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                cfg.AddProfile(new MyProfiles());
             });
-
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-             services.AddDbContext<VersionDatabaseModel>(options =>options.UseSqlServer(Configuration.GetConnectionString("devConnection")));
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddDbContext<VManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("devConnection")));
+            services.AddMvc().AddFluentValidation(fv => 
+            {
+                fv.ImplicitlyValidateChildProperties = true;
+            });
+            services.AddDTOValidators();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
