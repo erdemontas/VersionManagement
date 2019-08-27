@@ -28,13 +28,7 @@ namespace VersionManagement.Controllers
         public ActionResult<List<ChangeLogDTO>> Get(bool includeDeleted = false) => Ok(mapper.Map<IEnumerable<LiteChangeLogDTO>>(repoWrapper.ChangeLog.GetByCondition(x => !x.IsDeleted).ToList()));
         // GET: api/ChangeLog/5
         [HttpGet("{id}", Name = "GetChangeLog")]
-        public ActionResult<ChangeLogDTO> Get(Guid id)
-        {
-            ChangeLogDTO cld = mapper.Map<ChangeLogDTO>(repoWrapper.ChangeLog.GetById(id));
-            cld.Version = mapper.Map<VersionDTO>(repoWrapper.Version.GetById(cld.VersionId.GetValueOrDefault()));
-            cld.ChangeLogType = mapper.Map<ChangeLogTypeDTO>(repoWrapper.ChangeLogType.GetById(cld.ChangeLogTypeId.GetValueOrDefault()));
-            return Ok(cld);
-        }
+        public ActionResult<ChangeLogDTO> Get(Guid id) => Ok(mapper.Map<ChangeLogDTO>(repoWrapper.ChangeLog.GetById(id)));
         // POST: api/ChangeLog
         [HttpPost]
         public ActionResult Post([FromBody] ChangeLogDTO value)

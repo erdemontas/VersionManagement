@@ -28,12 +28,7 @@ namespace VersionManagement.Controllers
 
         // GET: api/Component/5
         [HttpGet("{id}", Name = "GetComponent")]
-        public ActionResult<ComponentDTO> Get(Guid id)
-        {
-            ComponentDTO cmpd = mapper.Map<ComponentDTO>(repoWrapper.Component.GetById(id));
-            cmpd.Product = mapper.Map<ProductDTO>(repoWrapper.Product.GetById(cmpd.ProductId.GetValueOrDefault()));
-            return Ok(cmpd);
-        }
+        public ActionResult<ComponentDTO> Get(Guid id) => Ok(mapper.Map<ComponentDTO>(repoWrapper.Component.GetById(id)));
         // POST: api/Component
         [HttpPost]
         public ActionResult Post([FromBody] ComponentDTO value)

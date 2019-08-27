@@ -9,7 +9,8 @@ namespace VersionManagement.Models
     {
         public VManagementContext(DbContextOptions<VManagementContext> options)
             : base(options)
-        { }
+        {
+        }
 
         public DbSet<ChangeLog> ChangeLog { get; set; } // DTO
         public DbSet<ChangeLogType> ChangeLogType { get; set; }
@@ -37,6 +38,7 @@ namespace VersionManagement.Models
             modelBuilder.Entity<CustomerProduct>().HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId);
             //modelBuilder.Entity<CustomerProduct>().HasMany(x => Version).WithOne().HasForeignKey(x => x.Id);
             modelBuilder.Configure<Product>();
+            //modelBuilder.Entity<Product>().HasMany(x => x.Components).WithOne().HasForeignKey(X => X.ProductId);
             modelBuilder.Configure<PublishActivity>();
             //modelBuilder.Entity<PublishActivity>().HasMany(x => CustomerProduct).WithOne().HasForeignKey(x => x.Id);
             //modelBuilder.Entity<PublishActivity>().HasMany(x => Version).WithOne().HasForeignKey(x => x.Id);

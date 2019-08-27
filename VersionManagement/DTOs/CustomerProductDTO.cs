@@ -14,8 +14,8 @@ namespace VersionManagement.DTOs
     }
     public class CustomerProductDTO : LiteCustomerProductDTO
     {
-        public Customer Customer { get; set; }
-        public Product Product { get; set; }
-        public Models.Version LastVersion { get; set; }
+        public CustomerDTO Customer { get; set; }
+        public ProductDTO Product { get; set; }
+        public VersionDTO LastVersion { get; set; }
     }
 }

@@ -29,7 +29,6 @@ namespace VersionManagement.Controllers
         // GET: api/Product/5
         [HttpGet("{id}", Name = "GetProduct")]
         public ActionResult<ProductDTO> Get(Guid id) => Ok(mapper.Map<ProductDTO>(repoWrapper.Product.GetById(id)));
-
         // POST: api/Product
         [HttpPost]
         public ActionResult Post([FromBody] ProductDTO value)

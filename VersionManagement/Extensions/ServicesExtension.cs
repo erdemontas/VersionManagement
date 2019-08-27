@@ -6,7 +6,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using VersionManagement.DTOs;
+using VersionManagement.Models;
 using VersionManagement.Validators;
+using VersionManagement.Validators.EntityValidators;
 
 namespace VersionManagement.Extensions
 {
@@ -23,6 +25,18 @@ namespace VersionManagement.Extensions
             services.AddTransient<IValidator<ProductDTO>, ProductDTOValidator>();
             services.AddTransient<IValidator<PublishActivityDTO>, PublishActivityDTOValidator>();
             services.AddTransient<IValidator<VersionDTO>, VersionDTOValidator>();
+        }
+        public static void AddEntityValidators(this IServiceCollection services)
+        {
+            services.AddTransient<IValidator<ChangeLog>, ChangeLogValidator>();
+            services.AddTransient<IValidator<ChangeLogType>, ChangeLogTypeValidator>();
+            services.AddTransient<IValidator<Component>, ComponentValidator>();
+            services.AddTransient<IValidator<ComponentType>, ComponentTypeValidator>();
+            services.AddTransient<IValidator<Customer>, CustomerValidator>();
+            services.AddTransient<IValidator<CustomerProduct>, CustomerProductValidator>();
+            services.AddTransient<IValidator<Product>, ProductValidator>();
+            services.AddTransient<IValidator<PublishActivity>, PublishActivityValidator>();
+            services.AddTransient<IValidator<Models.Version>, VersionValidator>();
         }
     }
 }

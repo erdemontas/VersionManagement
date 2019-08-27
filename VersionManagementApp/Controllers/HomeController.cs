@@ -3,37 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using VersionManagement.Models;
-using VersionManagement.Repositories;
+using VersionManagementApp.Models;
 
-namespace VersionManagement.Controllers
+namespace VersionManagementApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IMapper _mapper;
-        public HomeController(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 

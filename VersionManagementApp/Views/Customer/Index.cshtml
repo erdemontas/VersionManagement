@@ -1,0 +1,22 @@
+﻿@model IEnumerable<VersionManagement.DTOs.CustomerDTO>
+
+@{
+    ViewData["Title"] = "View";
+}
+<h1>CUSTOMERS</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Customer Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td><a asp-controller="Customer" asp-action="Index" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a></td>
+        </tr>
+}
+    </tbody>
+</table>

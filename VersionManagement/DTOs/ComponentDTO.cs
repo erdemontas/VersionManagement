@@ -17,6 +17,6 @@ namespace VersionManagement.DTOs
     }
     public class DetailedComponentDTO : ComponentDTO
     {
-        public List<Version> Versions { get; set; }
+        public List<VersionDTO> Versions { get; set; }
     }
 }

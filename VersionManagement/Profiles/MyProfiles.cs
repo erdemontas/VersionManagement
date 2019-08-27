@@ -6,6 +6,8 @@ using VersionManagement.DTOs;
 using VersionManagement.Models;
 using AutoMapper;
 using VersionManagement.Extensions;
+using VersionManagement.Wrappers;
+using VersionManagement.Interfaces;
 
 namespace VersionManagement.Profiles
 {
@@ -16,57 +18,45 @@ namespace VersionManagement.Profiles
             //ChangeLog
             //Lite
             CreateMap<ChangeLog, LiteChangeLogDTO>();
-            CreateMap<LiteChangeLogDTO, ChangeLog>()
-                .MapSharedProperties(dto => dto,entity=>entity);
+            CreateMap<LiteChangeLogDTO, ChangeLog>();
             //Standard
-            CreateMap<ChangeLog, ChangeLogDTO>();
-            CreateMap<ChangeLogDTO, ChangeLog>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<ChangeLog, ChangeLogDTO>().IncludeBase<ChangeLog, LiteChangeLogDTO>();
+            
+            CreateMap<ChangeLogDTO, ChangeLog>();
             //ChangeLogType
             CreateMap<ChangeLogType, ChangeLogTypeDTO>();
-            CreateMap<ChangeLogTypeDTO, ChangeLogType>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<ChangeLogTypeDTO, ChangeLogType>();
             //Lite Component
             CreateMap<Component, LiteComponentDTO>();
-            CreateMap<LiteComponentDTO, Component>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<LiteComponentDTO, Component>();
             //Standard Component
-            CreateMap<Component, ComponentDTO>();
-            CreateMap<ComponentDTO, Component>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<Component, ComponentDTO>().IncludeBase<Component, LiteComponentDTO>();
+            CreateMap<ComponentDTO, Component>();
             //Detailed Component
-            CreateMap<Component, DetailedComponentDTO>();
-            CreateMap<DetailedComponentDTO, Component>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<Component, DetailedComponentDTO>().IncludeBase<Component, ComponentDTO>();
+            CreateMap<DetailedComponentDTO, Component>();
             //ComponentType
             CreateMap<ComponentType, ComponentTypeDTO>();
-            CreateMap<ComponentTypeDTO, ComponentType>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<ComponentTypeDTO, ComponentType>();
             //Customer
             CreateMap<Customer, CustomerDTO>();
-            CreateMap<CustomerDTO, Customer>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<CustomerDTO, Customer>();
             //CustomerProduct
             //Lite
             CreateMap<CustomerProduct, LiteCustomerProductDTO>();
-            CreateMap<LiteCustomerProductDTO, CustomerProduct>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<LiteCustomerProductDTO, CustomerProduct>();
             //Standard
-            CreateMap<CustomerProduct, CustomerProductDTO>();
-            CreateMap<CustomerProductDTO, CustomerProduct>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<CustomerProduct, CustomerProductDTO>().IncludeBase<CustomerProduct, LiteCustomerProductDTO>();
+            CreateMap<CustomerProductDTO, CustomerProduct>();
             //Product
             CreateMap<Product, ProductDTO>();
-            CreateMap<ProductDTO, Product>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<ProductDTO, Product>();
             //Publish Activity
             CreateMap<PublishActivity, PublishActivityDTO>();
-            CreateMap<PublishActivityDTO, PublishActivity>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<PublishActivityDTO, PublishActivity>();
             //Version
             CreateMap<Models.Version, VersionDTO>();
-            CreateMap<VersionDTO, Models.Version>()
-                .MapSharedProperties(dto => dto, entity => entity);
+            CreateMap<VersionDTO, Models.Version>();
         }
     }
 }

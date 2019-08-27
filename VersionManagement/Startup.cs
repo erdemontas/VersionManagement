@@ -39,12 +39,13 @@ namespace VersionManagement
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-            services.AddDbContext<VManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("devConnection")));
+            services.AddDbContext<VManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("devConnection")).UseLazyLoadingProxies());
             services.AddMvc().AddFluentValidation(fv => 
             {
                 fv.ImplicitlyValidateChildProperties = true;
             });
             services.AddDTOValidators();
+            services.AddEntityValidators();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

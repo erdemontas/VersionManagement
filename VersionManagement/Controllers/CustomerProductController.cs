@@ -24,18 +24,15 @@ namespace VersionManagement.Controllers
         }
         // GET: api/CustomerProduct
         [HttpGet]
-        public ActionResult<List<CustomerProductDTO>> Get(bool includeDeleted = false) => Ok(mapper.Map<IEnumerable<LiteCustomerProductDTO>>(repoWrapper.CustomerProduct.GetByCondition(x => x.IsActive).ToList()));
+        public ActionResult<List<CustomerProductDTO>> Get(bool includeDeleted = false) => Ok(mapper.Map<IEnumerable<CustomerProductDTO>>(repoWrapper.CustomerProduct.GetByCondition(x => x.IsActive).ToList()));
 
         // GET: api/CustomerProduct/5
         [HttpGet("{id}", Name = "GetCustomerProduct")]
-        public ActionResult<CustomerProductDTO> Get(Guid id)
-        {
-            CustomerProductDTO cpd = mapper.Map<CustomerProductDTO>(repoWrapper.CustomerProduct.GetById(id));
-            //cpd.Customer = mapper.Map<CustomerDTO>(repoWrapper.Version.GetById(cpd.CustomerId.GetValueOrDefault()));
-            //cpd.Product = mapper.Map<ProductDTO>(repoWrapper.Product.GetById(cpd.ProductId.GetValueOrDefault()));
-            //cpd.LastVersion = mapper.Map<VersionDTO>(repoWrapper.Version.GetById(cpd.LastVersionId.GetValueOrDefault()));
-            return Ok(mapper.Map<CustomerProductDTO>(repoWrapper.CustomerProduct.GetById(id)));
-        }
+        public ActionResult<CustomerProductDTO> Get(Guid id) => Ok(mapper.Map<CustomerProductDTO>(repoWrapper.CustomerProduct.GetById(id)));
+        [HttpGet("GetByProductId/{id}", Name = "GetCustomerProductByProductId")]
+        public ActionResult<List<CustomerProductDTO>> GetByProductId(Guid id) => Ok(mapper.Map<IEnumerable<CustomerProductDTO>>(repoWrapper.CustomerProduct.GetByCondition(x => x.ProductId == id).ToList()));
+        [HttpGet("GetByCustomerId/{id}", Name = "GetCustomerProductByCustomerId")]
+        public ActionResult<List<CustomerProductDTO>> GetByCustomerId(Guid id) => Ok(mapper.Map<IEnumerable<CustomerProductDTO>>(repoWrapper.CustomerProduct.GetByCondition(x => x.CustomerId == id).ToList()));
         // POST: api/CustomerProduct
         [HttpPost]
         public ActionResult Post([FromBody] CustomerProductDTO value)

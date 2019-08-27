@@ -28,13 +28,7 @@ namespace VersionManagement.Controllers
 
         // GET: api/PublishActivity/5
         [HttpGet("{id}", Name = "GetPublishActivity")]
-        public ActionResult<PublishActivityDTO> Get(Guid id)
-        {
-            PublishActivityDTO pad = mapper.Map<PublishActivityDTO>(repoWrapper.PublishActivity.GetById(id));
-            //pad.CustomerProduct = mapper.Map<CustomerProductDTO>(repoWrapper.CustomerProduct.GetById(pad.CustomerProductId.GetValueOrDefault()));
-            //pad.Version = mapper.Map<VersionDTO>(repoWrapper.Version.GetById(pad.VersionId.GetValueOrDefault()));
-            return Ok(mapper.Map<PublishActivityDTO>(repoWrapper.PublishActivity.GetById(id)));
-        }
+        public ActionResult<PublishActivityDTO> Get(Guid id) => mapper.Map<PublishActivityDTO>(repoWrapper.PublishActivity.GetById(id));
         // POST: api/PublishActivity
         [HttpPost]
         public ActionResult Post([FromBody] PublishActivityDTO value)

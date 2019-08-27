@@ -1,0 +1,30 @@
+﻿@model IEnumerable<VersionManagement.DTOs.CustomerProductDTO>
+@{
+    ViewData["Title"] = "View";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Version Number  
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastVersion.ReleaseNumber)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

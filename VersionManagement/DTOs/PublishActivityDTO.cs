@@ -13,7 +13,7 @@ namespace VersionManagement.DTOs
     }
     public class PublishActivityDTO : LitePublishActivityDTO
     {
-        public CustomerProduct CustomerProduct { get; set; }
-        public Models.Version Version { get; set; }
+        public CustomerProductDTO CustomerProduct { get; set; }
+        public VersionDTO Version { get; set; }
     }
 }

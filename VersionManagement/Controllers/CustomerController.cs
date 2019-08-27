@@ -30,11 +30,6 @@ namespace VersionManagement.Controllers
         // GET: api/Customer/5
         [HttpGet("{id}", Name = "GetCustomer")]
         public ActionResult<CustomerDTO> Get(Guid id) => Ok(mapper.Map<CustomerDTO>(repoWrapper.Customer.GetById(id)));
-
-        // GET: api/ChangeLogType/undeleted
-        [HttpGet("undeleted", Name = "GetCustomerUndeleted")]
-        public ActionResult<List<CustomerDTO>> GetUndeleted() => Ok(mapper.Map<IEnumerable<CustomerDTO>>(repoWrapper.Customer.GetByCondition(x => x.IsDeleted == false)));
-
         // POST: api/Customer
         [HttpPost]
         public ActionResult Post([FromBody] CustomerDTO value)
